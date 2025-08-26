@@ -3,6 +3,7 @@ package ru.vasilev.logic;
 import ru.vasilev.model.Ticket;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class FlightTimeCalculator {
         return tickets.stream()
                 .collect(Collectors.groupingBy(
                         Ticket::getCarrier,
-                        Collectors.minBy((t1, t2) -> Long.compare(t1.getFlightMinutes(), t2.getFlightMinutes()))
+                        Collectors.minBy(Comparator.comparingLong(Ticket::getFlightMinutes))
                 ))
                 .entrySet().stream()
                 .collect(Collectors.toMap(
